@@ -5,26 +5,20 @@ require 'dotenv'
 require 'gocardless_pro'
 require 'oauth2'
 
-Dotenv.load
-Prius.load(:gocardless_client_id)
-Prius.load(:gocardless_client_secret)
-Prius.load(:gocardless_connect_url)
-Prius.load(:gocardless_api_url)
-Prius.load(:session_secret)
-Prius.load(:redirect_uri)
-Prius.load(:gocardless_connect_authorize_path)
-Prius.load(:gocardless_connect_access_token_path)
+configure { set :server, :puma }
 
-CLIENT_ID = Prius.get(:gocardless_client_id)
-CLIENT_SECRET = Prius.get(:gocardless_client_secret)
-CONNECT_URL = Prius.get(:gocardless_connect_url)
-API_URL = Prius.get(:gocardless_api_url)
-REDIRECT_URI = Prius.get(:redirect_uri)
-AUTHORIZE_PATH = Prius.get(:gocardless_connect_authorize_path)
-ACCESS_TOKEN_PATH = Prius.get(:gocardless_connect_access_token_path)
+Dotenv.load
+CLIENT_ID = Prius.load(:gocardless_client_id)
+CLIENT_SECRET = Prius.load(:gocardless_client_secret)
+CONNECT_URL = Prius.load(:gocardless_connect_url)
+API_URL = Prius.load(:gocardless_api_url)
+SESSION_SECRET = Prius.load(:session_secret)
+REDIRECT_URI = Prius.load(:redirect_uri)
+AUTHORIZE_PATH = Prius.load(:gocardless_connect_authorize_path)
+ACCESS_TOKEN_PATH = Prius.load(:gocardless_connect_access_token_path)
 
 enable :sessions
-set :session_secret, Prius.get(:session_secret)
+set :session_secret, SESSION_SECRET
 
 OAUTH = OAuth2::Client.new(CLIENT_ID,
                            CLIENT_SECRET,

@@ -17,6 +17,8 @@ GEM
       multi_xml (~> 0.5)
       rack (~> 1.2)
     prius (0.2.0)
+    puma (2.11.3)
+      rack (>= 1.1, < 2.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -34,6 +36,7 @@ DEPENDENCIES
   gocardless_pro
   oauth2
   prius
+  puma
   sinatra
 
 BUNDLED WITH
