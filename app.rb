@@ -39,6 +39,11 @@ get '/connect' do
   redirect authorize_url
 end
 
+get "/reset" do
+  session[:access_token] = nil
+  redirect "/"
+end
+
 get '/analytics' do
   if params[:code]
     token = OAUTH.auth_code.get_token(params[:code], redirect_uri: REDIRECT_URI)
