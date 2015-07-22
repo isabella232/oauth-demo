@@ -59,6 +59,9 @@ get '/analytics' do
   gocardless = GoCardlessPro::Client.new(access_token: access_token,
                                          url: API_URL)
 
-  @customers = gocardless.customers.all
+  @customer_count = gocardless.customers.all.count
+  @payments = gocardless.payments.all
+  @payment_count = @payments.count
+  @payment_total = @payments.map { |payment| payment.amount / 100 }.inject(0, :+).round(2)
   erb :analytics
 end
