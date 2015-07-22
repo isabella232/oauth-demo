@@ -1,11 +1,9 @@
-require 'rubygems'
 require 'sinatra'
-require 'prius'
+require 'rack-flash'
 require 'dotenv'
+require 'prius'
 require 'gocardless_pro'
 require 'oauth2'
-
-configure { set :server, :puma }
 
 Dotenv.load
 CLIENT_ID = Prius.load(:gocardless_client_id)
@@ -19,6 +17,7 @@ ACCESS_TOKEN_PATH = Prius.load(:gocardless_connect_access_token_path)
 
 enable :sessions
 set :session_secret, SESSION_SECRET
+use Rack::Flash, accessorize: [:notice, :error]
 
 OAUTH = OAuth2::Client.new(CLIENT_ID,
                            CLIENT_SECRET,
@@ -26,12 +25,23 @@ OAUTH = OAuth2::Client.new(CLIENT_ID,
                            authorize_url: AUTHORIZE_PATH,
                            token_url: ACCESS_TOKEN_PATH)
 
-# Customer visits the site. Hi Customer!
+error GoCardlessPro::Error do
+  if env['sinatra.error'].code == 401
+    session[:access_token] = nil
+    flash[:error] = "Your access token is invalid - please reconnect your account."
+  else
+    flash[:error] = "Something went wrong. Please try again later."
+  end
+
+  redirect "/"
+end
+
 get '/' do
+  redirect "/analytics" if session[:access_token]
+
   erb :index
 end
 
-# Customer purchases an item
 get '/connect' do
   authorize_url = OAUTH.auth_code.authorize_url(redirect_uri: REDIRECT_URI,
                                                 scope: "read_only")
@@ -39,8 +49,9 @@ get '/connect' do
   redirect authorize_url
 end
 
-get "/reset" do
+get "/logout" do
   session[:access_token] = nil
+  flash[:notice] = "You have been successfully logged out."
   redirect "/"
 end
 
@@ -53,6 +64,7 @@ get '/analytics' do
   elsif session[:access_token]
     access_token = session[:access_token]
   else
+    flash[:error] = "You don't seem to be logged in at the moment."
     redirect "/"
   end
 

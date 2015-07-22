@@ -1,23 +1,9 @@
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron" style="border-bottom: 3px solid #dddddd">
-  <div class="container">
-    <span style="font-size: 144px;"><i class="fa fa-cog"></i></span>
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="text-center">You have taken</h1>
+    <p class="lead text-center"
+      ><%= @payment_count %> <%= @payments_count == 1 ? "payment" : "payments" %>, totalling £<%= "%.2f" % @payment_total %>, from <%= @customer_count %> <%= @customer_count == 1 ? "customer" : "customers" %></p>
+    <br />
+    <p class="text-center"><small><a href="/logout">Log out</a></small></p>
   </div>
 </div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">You have taken...</h1>
-      <h2 class="text-center"><%= @payment_count %> payments, totalling £<%= "%.2f" % @payment_total %> from <%= @customer_count %> customers</h2>
-    </div>
-  </div>
-
-  <hr/>
-  <footer>
-    <center>
-      Made with ❤ by <a href="http://gocardless.com">GoCardless Engineering</a> (<a href="http://github.com/gocardless/flow-demo-app">view source</a>)
-    </center>
-  </footer>
-
-</div> <!-- /container -->

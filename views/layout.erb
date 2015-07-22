@@ -31,7 +31,37 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="jumbotron" style="border-bottom: 3px solid #dddddd">
+      <div class="container">
+        <span style="font-size: 144px;"><i class="fa fa-cog"></i></span>
+      </div>
+    </div>
+
+    <div class="container">
+      <% if env['x-rack.flash'][:notice] %>
+        <div class="alert alert-info" role="alert">
+            <%= env['x-rack.flash'][:notice] %>
+        </div>
+      <% end %>
+
+      <% if env['x-rack.flash'][:error] %>
+        <div class="alert alert-danger" role="alert">
+            <%= env['x-rack.flash'][:error] %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+
+      <hr>
+
+      <footer>
+        <center>
+          Made with ❤ by <a href="http://gocardless.com">GoCardless Engineering</a>
+        </center>
+      </footer>
+
+    </div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
