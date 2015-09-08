@@ -44,7 +44,8 @@ end
 
 get '/connect' do
   authorize_url = OAUTH.auth_code.authorize_url(redirect_uri: REDIRECT_URI,
-                                                scope: "read_only")
+                                                scope: "read_only",
+                                                initial_view: "signup")
 
   redirect authorize_url
 end
