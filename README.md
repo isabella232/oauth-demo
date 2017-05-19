@@ -28,3 +28,4 @@ Then open [http://localhost:9292/](http://localhost:9292/)
 * __GOCARDLESS_API_URL__: The URL at which the GoCardless Pro API is available (`https://api.gocardless.com` or `https://api-sandbox.gocardless.com`)
 * __SESSION_SECRET__: A random string for securing session data
 * __REDIRECT_URI__: The redirect URI of your GoCardless app. (<http://localhost:9292/analytics> if running locally with `bundle exec rackup`)
+* __VERIFY_URL__: The URL of the GoCardless onboarding flow (<https://verify.gocardless.com> or <https://verify-sandbox.gocardless.com>)

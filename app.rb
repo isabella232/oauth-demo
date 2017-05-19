@@ -10,6 +10,7 @@ CLIENT_ID = Prius.load(:gocardless_client_id)
 CLIENT_SECRET = Prius.load(:gocardless_client_secret)
 CONNECT_URL = Prius.load(:gocardless_connect_url)
 API_URL = Prius.load(:gocardless_api_url)
+VERIFY_URL = Prius.load(:verify_url)
 SESSION_SECRET = Prius.load(:session_secret)
 REDIRECT_URI = Prius.load(:redirect_uri)
 AUTHORIZE_PATH = Prius.load(:gocardless_connect_authorize_path)
@@ -75,6 +76,22 @@ get '/analytics' do
   @customer_count = gocardless.customers.all.count
   @payments = gocardless.payments.all
   @payment_count = @payments.count
+  creditor = gocardless.creditors.list.records.first
+  @verification_status = creditor.verification_status
   @payment_total = @payments.map { |payment| payment.amount / 100 }.inject(0, :+).round(2)
+  @verify_url = VERIFY_URL
   erb :analytics
+end
+
+get '/onboarding-complete' do
+  if session[:access_token]
+    gocardless = GoCardlessPro::Client.new(access_token: session[:access_token],
+                                           url: API_URL)
+    creditor = gocardless.creditors.list.records.first
+    @verification_status = creditor.verification_status
+    erb :onboarding_complete
+  else
+    flash[:error] = "You don't seem to be logged in at the moment."
+    redirect "/"
+  end
 end

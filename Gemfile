@@ -1,9 +1,9 @@
-ruby "2.2.0"
+ruby "2.4.1"
 source "http://rubygems.org"
 
 gem "sinatra", "~> 2.0.0"
 gem "oauth2", "~> 1.3.1"
-gem "gocardless_pro", "~> 1.0.0"
+gem "gocardless_pro", "~> 2.1.0"
 gem "prius", "~> 1.0.0"
 gem "dotenv", "~> 2.2.1"
 gem "puma", "~> 3.8.2"
