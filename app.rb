@@ -63,6 +63,11 @@ get '/analytics' do
 
     access_token = token.token
     session[:access_token] = access_token
+
+    # Reload this page, but without the "code" in the URL. (This means that any refreshes
+    # of the page won't try to exchange the code for an access token a second time,
+    # causing the access tokens to be revoked.
+    redirect "/analytics"
   elsif session[:access_token]
     access_token = session[:access_token]
   else
