@@ -22,12 +22,12 @@ GEM
     rack (2.0.5)
     rack-flash3 (1.0.5)
       rack
-    rack-protection (2.0.2)
+    rack-protection (2.0.3)
       rack
-    sinatra (2.0.2)
+    sinatra (2.0.3)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.2)
+      rack-protection (= 2.0.3)
       tilt (~> 2.0)
     tilt (2.0.8)
 
@@ -41,7 +41,7 @@ DEPENDENCIES
   prius (~> 2.0.0)
   puma (~> 3.11.4)
   rack-flash3 (~> 1.0.5)
-  sinatra (~> 2.0.2)
+  sinatra (~> 2.0.3)
 
 RUBY VERSION
    ruby 2.4.1p111
