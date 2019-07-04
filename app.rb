@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'rack-flash'
 require 'dotenv'
@@ -16,9 +18,11 @@ REDIRECT_URI = Prius.load(:redirect_uri)
 AUTHORIZE_PATH = Prius.load(:gocardless_connect_authorize_path)
 ACCESS_TOKEN_PATH = Prius.load(:gocardless_connect_access_token_path)
 
-enable :sessions
-set :session_secret, SESSION_SECRET
-use Rack::Flash, accessorize: [:notice, :error]
+use Rack::Session::Cookie, key: 'rack.session',
+                           secret: SESSION_SECRET,
+                           secure: true # disable this in non-SSL environments
+
+use Rack::Flash, accessorize: %i[notice error]
 
 OAUTH = OAuth2::Client.new(CLIENT_ID,
                            CLIENT_SECRET,
